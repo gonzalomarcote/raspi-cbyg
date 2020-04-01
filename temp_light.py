@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 # Import libraries
+from gpiozero import LED
 from gpiozero import MotionSensor, LED
 from gpiozero import MCP3008
 from signal import pause
