@@ -48,10 +48,9 @@ while True:
 
     # Check temp
     btemp = cputemp()
-    #if btemp >= 45:
-    #    print('The raspberry pi temperature is high: ' + str(btemp))
-    #elif btemp < 45:
-    #    print('The raspberry pi temperature is normal: ' + str(btemp))
+    print('The raspberry pi temperature is: ' + str(btemp) + 'C')
+    #rtemp = convert_temp(adc.values)
+    #print('The external rack temperature is: ' + str(rtemp) + 'C')
 
     # Turn on/off led and lcd on pir motion for 30 seconds
     if pir.motion_detected:
@@ -62,10 +61,3 @@ while True:
     else:
         print('Door closed')
         light.off()
-    #pir.when_motion = light.on
-    #pir.when_no_motion = light.off
-
-    #rtemp = convert_temp(adc.values)
-    #print('The temperature is', rtemp, 'C')
-
-pause()
