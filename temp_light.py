@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
 # Import libraries
+from RPLCD.gpio import CharLCD
 from gpiozero import LED
 from gpiozero import MotionSensor, LED
 from gpiozero import MCP3008
 from signal import pause
 from time import sleep
+
 
 # Variables
 pir = MotionSensor(4)
@@ -24,4 +26,5 @@ pir.when_no_motion = light.off
     #temp = convert_temp(adc.values)
     #print('The temperature is', temp, 'C')
     #sleep(1)
+
 pause()
