@@ -40,7 +40,8 @@ def cputemp():
     f = open("/sys/class/thermal/thermal_zone0/temp")
     CPUTemp = f.read()
     f.close()
-    return btemp = str(int(CPUTemp)/1000)
+    btemp = str(int(CPUTemp)/1000)
+    return btemp
 
 
 # Program:
@@ -52,7 +53,7 @@ while True:
     pir.when_no_motion = light.off
     #rtemp = convert_temp(adc.values)
     #print('The temperature is', rtemp, 'C')
-    cputemp()
+    btemp = cputemp()
     if btemp >= 45:
         print('The raspberry pi temperature is high: ' + btemp)
     elif btemp < 45:
