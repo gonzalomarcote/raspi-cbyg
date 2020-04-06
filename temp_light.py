@@ -30,17 +30,33 @@ lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_c
 
 
 # Functions
+# Convert sensor temperature to celsius
 def convert_temp(gen):
     for value in gen:
         yield (value * 3.3 - 0.5) * 100
 
-# Program
-lcd.message('Hello\nworld!')
-#while True:
-pir.when_motion = light.on
-pir.when_no_motion = light.off
-    #temp = convert_temp(adc.values)
-    #print('The temperature is', temp, 'C')
-    #sleep(1)
+# Get internal Raspberry CPU temperature
+def cputemp():
+    f = open("/sys/class/thermal/thermal_zone0/temp")
+    CPUTemp = f.read()
+    f.close()
+    return btemp = str(int(CPUTemp)/1000)
+
+
+# Program:
+lcd.message('  CBYG - RACK\n' + 'R:35  B:42  P:37')
+
+while True:
+    # Turn on/off led and lcd on pir motion
+    pir.when_motion = light.on
+    pir.when_no_motion = light.off
+    #rtemp = convert_temp(adc.values)
+    #print('The temperature is', rtemp, 'C')
+    cputemp()
+    if btemp >= 45:
+        print('The raspberry pi temperature is high: ' + btemp)
+    elif btemp < 45:
+        print('The raspberry pi temperature is normal: ' + btemp)
+    sleep(30)
 
 pause()
