@@ -40,24 +40,32 @@ def cputemp():
     f = open("/sys/class/thermal/thermal_zone0/temp")
     CPUTemp = f.read()
     f.close()
-    btemp = str(int(CPUTemp)/1000)
+    btemp = int(CPUTemp)/1000
     return btemp
 
 
-# Program:
-lcd.message('  CBYG - RACK\n' + 'R:35  B:42  P:37')
-
 while True:
-    # Turn on/off led and lcd on pir motion
-    pir.when_motion = light.on
-    pir.when_no_motion = light.off
+
+    # Check temp
+    btemp = cputemp()
+    #if btemp >= 45:
+    #    print('The raspberry pi temperature is high: ' + str(btemp))
+    #elif btemp < 45:
+    #    print('The raspberry pi temperature is normal: ' + str(btemp))
+
+    # Turn on/off led and lcd on pir motion for 30 seconds
+    if pir.motion_detected:
+        print('Door open')
+        light.on()
+        lcd.message('  CBYG - RACK\n' + 'R:35  B:' + str(int(round(btemp))) +  '  P:37')
+        sleep(30)
+    else:
+        print('Door closed')
+        light.off()
+    #pir.when_motion = light.on
+    #pir.when_no_motion = light.off
+
     #rtemp = convert_temp(adc.values)
     #print('The temperature is', rtemp, 'C')
-    btemp = cputemp()
-    if btemp >= 45:
-        print('The raspberry pi temperature is high: ' + btemp)
-    elif btemp < 45:
-        print('The raspberry pi temperature is normal: ' + btemp)
-    sleep(30)
 
 pause()
