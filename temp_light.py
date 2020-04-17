@@ -33,7 +33,7 @@ lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_c
 # Functions
 # Get external Rack temperature
 def rack_temp(gen):
-    rtemp = (gen * 3.3 - 0.5) * 100
+    rtemp = (gen * 3.3 - 0.5)*100
     return rtemp
 
 # Get internal Bastion temperature
