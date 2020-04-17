@@ -12,7 +12,8 @@ from time import sleep
 # Variables
 pir = MotionSensor(4)
 light = LED(16)
-adc = MCP3008(channel=0)
+#adc = MCP3008(channel=0)
+adc = MCP3008(channel=0, device=0)
 lcd_rs = 25
 lcd_en = 24
 lcd_d4 = 23
@@ -32,8 +33,8 @@ lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_c
 # Functions
 # Get external Rack temperature
 def rack_temp(gen):
-    for value in gen:
-        yield (value * 3.3 - 0.5) * 100
+    rtemp = (gen * 3.3 - 0.5) * 100
+    return rtemp
 
 # Get internal Bastion temperature
 def bastion_temp():
@@ -55,7 +56,7 @@ while True:
         # Check temp
         btemp = bastion_temp()
         print('The raspberry pi temperature is: ' + str(btemp) + 'C')
-        rtemp = rack_temp(adc.values)
+        rtemp = rack_temp(adc.value)
         print('The external rack temperature is: ' + str(rtemp) + 'C')
         lcd.message('  CBYG - RACK\n' + 'R:' + str(int(round(rtemp))) + ' B:' + str(int(round(btemp))) +  '  P:37')
         sleep(30)
